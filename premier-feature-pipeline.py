@@ -21,7 +21,7 @@ def g():
     print(premier_league_df.index)
     premier_league_fg = fs.get_or_create_feature_group(
         name='premier_league',
-        version=4,
+        version=6,
         primary_key=['index'],
         description='Premier League Predictor'
     )

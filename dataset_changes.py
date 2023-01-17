@@ -21,13 +21,13 @@ encoder = LabelEncoder()
 home_team_enc = encoder.fit_transform(data['HomeTeam'])
 home_encoded_mapping = dict(
     zip(encoder.classes_, encoder.transform(encoder.classes_).tolist()))
-data['home_team_enc'] = home_team_enc
+data['home_team_enc'] = home_team_enc 
 
 encoder = LabelEncoder()
 away_team_enc = encoder.fit_transform(data['AwayTeam'])
 away_team_enc_mapping = dict(
     zip(encoder.classes_, encoder.transform(encoder.classes_).tolist()))
-data['away_team_enc'] = away_team_enc
+data['away_team_enc'] = away_team_enc 
 #print(data.head(5))
 #print(data[data.isna().any(axis=1)]) # 5 rows
 #data = data.dropna(axis=0)
@@ -39,10 +39,11 @@ data['away_team_enc'] = away_team_enc
     #del data[x]
 #print(data['index'].head(5))
 
-features = ['index','home_team_enc','away_team_enc','HTHG','HTAG','HS','AS','HST','AST','HR','AR']
+features = ['index','HTHG','HTAG','HS','AS','HST','AST','HR','AR']
 label = ['FTR']
 all_data = features + label
 data = data[all_data]
+print (data.head(100)) 
 #del data[data. columns[0]] 
 """ data = data.astype({'FTR':'string'})
 data['FTR'].replace('A', 0,inplace=True)
@@ -51,14 +52,21 @@ data['FTR'].replace('H', 2,inplace=True)
  """
 
 upper_case =['HTHG','HTAG','HS','AS','HST', 'AST','HR','AR','FTR']
-lower_case=['index','home_team_enc','away_team_enc','hthg', 'htag','hs','as','hst','ast','hr','ar']
+lower_case=['index','hthg', 'htag','hs','as','hst','ast','hr','ar']
 
 for name in upper_case:
     data.rename(columns={name: name.lower()}, inplace=True)
 
 #print(data.dtypes)
-
-
+def transformResult(row):
+    if(row.ftr == 'H'):
+        return 1
+    elif(row.ftr == 'A'):
+        return -1
+    else:
+        return 0
+data["result"] = data.apply(lambda row: transformResult(row),axis=1)
+data.tail()
 
 #print(data.head(5))
 
@@ -72,10 +80,10 @@ y_label = data['ftr']
 del data['as']
 del data['index']
 data['index'] = data.index
+del data['ftr']
 data.to_csv('premier_league_dataset.csv', index=False)
 #print(y_label.head())
 
-del data['ftr']
 
 #y_label['FTR'] = y_label['FTR'].astype("string")
 #y_label['FTR'].replace('A', 0,inplace=True)

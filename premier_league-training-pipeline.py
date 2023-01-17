@@ -36,14 +36,14 @@ def g():
     fs = project.get_feature_store()
 
     try:
-        feature_view = fs.get_feature_view(name="premier_league", version=2)
+        feature_view = fs.get_feature_view(name="premier_league", version=3)
     except:
-        titanic_fg = fs.get_feature_group(name="premier_league", version=3)
+        titanic_fg = fs.get_feature_group(name="premier_league", version=6)
         query = titanic_fg.select_all()
         feature_view = fs.create_feature_view(name="premier_league",
-                                          version=2,
+                                          version=3,
                                           description="Read from Premier League Dataset",
-                                          labels=["ftr"],
+                                          labels=["result"],
                                           query=query)
  
     X_train, X_test, y_train, y_test = feature_view.train_test_split(0.2)
