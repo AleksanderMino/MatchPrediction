@@ -23,3 +23,4 @@ Future improvements:
 In this implementation the players of the teams are not considered, the stats of the football players of the diffeent teams could improve the performance of the model. An another improvement could be the creation of features such as average goals scored etc. 
 In this way the would have an idea of the overall performance of the team for a speficic season.
 
+HuggingFace Link: https://huggingface.co/spaces/almino/MatchPrediction
